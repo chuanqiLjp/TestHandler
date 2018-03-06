@@ -14,7 +14,7 @@
     
 	1)  发送消息：通过post()或sendMessage()，再调用MessageQueue的enqueueMessage()插入消息队列
     
-	2） 处理消息：当Looper的loop()方法中的循环调用MessageQueue的next()取到消息后，调用 msg.target.dispatchMessage(msg)进行分发，其Handler中事件处理的优先级顺序：Message.callback(Runnable) -> mCallBack(CallBack接口的子类)  ->Handler或子类的handleMessage()【平时使用的是优先级最低的】
+	2) 处理消息：当Looper的loop()方法中的循环调用MessageQueue的next()取到消息后，调用 msg.target.dispatchMessage(msg)进行分发，其Handler中事件处理的优先级顺序：Message.callback(Runnable) -> mCallBack(CallBack接口的子类)  ->Handler或子类的handleMessage()【平时使用的是优先级最低的】
 
 
 

@@ -20,9 +20,17 @@ public class Handler {
 		msg.target=this;
 		mQueue.enqueueMessage(msg);
 	}
+	/**
+	 * ¡¾4¡¿
+	 * @param msg
+	 */
 	public void dispatchMessage(Message msg){
 		handlMessage(msg);
 	}
+	/**
+	 * ¡¾5¡¿
+	 * @param msg
+	 */
 	public void handlMessage(Message msg){
 		
 	}

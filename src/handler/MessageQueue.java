@@ -44,7 +44,7 @@ public class MessageQueue {
 			items[putIndex] = msg;
 			putIndex = (++putIndex == items.length) ? 0 : putIndex;// 循环取值
 			count++;
-			// 生产出了产品通知消费线程（主线程）消费消息【notEmpty.wait()】
+			// 生产出了产品,通知消费线程（主线程）消费消息【notEmpty.wait()】
 			notEmpty.signal();
 		} finally {
 			lock.unlock();

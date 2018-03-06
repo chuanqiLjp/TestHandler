@@ -1,6 +1,21 @@
 # 说明
 这个项目参考了Handler的源码进行编写，是源码的一个简单版本，但是实现的主要功能是有清晰说明的。
 
+# Handler的总结归纳
+1. MessageQueue:存储消息，包含插入和读取消息的操作：
+
+    1) enqueueMessage():添加消息，实际上是单链表的操作，若消息队列满则添加消息的线程阻塞等待被唤醒；
+    2) next():读取消息伴随着消息的删除（相当于出队列），是一个无限循环，若无消息则一直阻塞等待，若有新消息到来则返回该消息并从链表中移除；
+
+2. Looper: 一个线程只能创建一个Looper对象，一个Looper对象只有一个MessageQueue（在Looper的构造方法中实例化），创建Looper对象使用Looper.prepare()，使用Looper.loop()启动消息循环，不断的从MessageQueue中获取消息，在交给Message的target属性所对应的Handler去处理（由于通常Looper对象会在主线程中创建并调用Looper.loop()去轮询消息，因此该方法执行在主线程中），若取到空消息则loop()退出循环（调用了Looper的quit()或quitSafely()才会取到空消息）；
+
+3. Handler：消息的发送和处理，
+    1)  发送消息：通过post()或sendMessage()，再调用MessageQueue的enqueueMessage()插入消息队列
+    2） 处理消息：当Looper的loop()方法中的循环调用MessageQueue的next()取到消息后，调用 msg.target.dispatchMessage(msg)进行分发，其Handler中事件处理的优先级顺序：Message.callback(Runnable) -> mCallBack(CallBack接口的子类)  ->Handler或子类的handleMessage()【平时使用的是优先级最低的】
+
+
+
+
 # 单线程模型中Message、Handler、MessageQueue、Looper之间的关系
 简单的说，Handler获取当前线程中的looper对象，looper用来从存放Message的MessageQueue中取出Message，再有Handler进行Message的分发和处理.
 
